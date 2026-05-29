@@ -7,10 +7,12 @@ const userSchema = mongoose.Schema({
     },
     email : {
         type : String,
-        required : true
+        required : true,
+        unique : true
     },
     message : {
-      type : String
+      type : String,
+      
     }
 });
 

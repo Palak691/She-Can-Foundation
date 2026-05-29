@@ -11,18 +11,20 @@ export const Form = () => {
     });
 
     const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const onChangeHandler = async (e) => {
         const { name, value } = e.target;
         setUserDetails((prevUser) => ({
             ...prevUser, [name]: value
         }));
-
+  
     }
 
     const onSubmitHandler = async (evt) => {
         evt.preventDefault();
-        console.log("Registering..");
+        setSuccessMessage('');
+        setErrorMessage('');
         try {
 
             const response = await fetch('http://localhost:9090/user', {
@@ -40,10 +42,13 @@ export const Form = () => {
                     email: '',
                     message: ''
                 });
+            }else{
+             setErrorMessage(data.message || "Failed to submit form.");
             }
         } catch (err) {
             console.log(err);
-            alert('failed to submit from.');
+             setErrorMessage("Failed to submit form.Please try again");
+
         }
 
     }
@@ -54,6 +59,7 @@ export const Form = () => {
             <form action="" onSubmit={onSubmitHandler} className='form' >
                 <h2>Fill the form</h2>
                 {successMessage && <p className='success'>{successMessage}</p> }
+                {errorMessage && <p className='error'>{errorMessage}</p>} 
                 <div>
                     <label htmlFor="name">Name</label>
                     <input type="text" placeholder='Rahul Singh' name='name' value={userDetails.name} onChange={onChangeHandler} required />

@@ -10,6 +10,11 @@ router.post('/', async (req,res)=>{
         if(!name || !email || !message){
           return  res.status(400).json({message : "All Fields are required!"});
         }
+
+        const existUser = await User.findOne({email});
+        if(existUser){
+            return res.status(400).json({message : "Email already exists!"})
+        }
         const newUser = await User.create({
             name : name,
             email : email,
