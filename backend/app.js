@@ -14,10 +14,8 @@ app.use(express.json());
 
 
 
-app.use('/user', userRouter);
-app.get('/',(req,res)=>{
-  res.send("hi")
-})
+app.use('/', userRouter);
+
 
 
 const start = async () => {
